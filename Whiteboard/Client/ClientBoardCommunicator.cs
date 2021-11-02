@@ -3,11 +3,11 @@
  * Created By: Gurunadh Pachappagari
  * Date Created: 13 Oct 2021
  * Date Modified: 01 Nov 2021
+
 **/
 
 using System;
 using System.Collections.Generic;
-using Networking;
 
 namespace Whiteboard
 {
@@ -15,16 +15,19 @@ namespace Whiteboard
     /// Bridge the gap between Server side White Board Modules and Networking module
     /// </summary>
 
-    public sealed class ClientBoardCommunicator : IClientBoardCommunicator, INotificationHandler
+    public class ClientBoardCommunicator : IClientBoardCommunicator, IMessageListener
     {
+
         private static ClientBoardCommunicator instance = null;
         private static ISerializer serializer;
         private static ICommunicator communicator;
         private static string moduleIdentifier = "Whiteboard";
         private static HashSet<IServerUpdateListener> subscribers;
         /// <summary>
-        /// private constructor for a singleton
+        /// deserializes the xml string to Board server shape
+        /// publishes the deserialized object to subscribers
         /// </summary>
+
         private ClientBoardCommunicator() { }
 
         /// <summary>
@@ -55,26 +58,24 @@ namespace Whiteboard
             }
             
         }
-        
+
         /// <summary>
         /// serializes the shape objects and passes it to communicator.send()
         /// </summary>
         /// <param name="clientUpdate"> the object to be passed to server</param>
-        public void Send(BoardServerShape clientUpdate) 
+        public void Send(BoardServerShape clientUpdate)
         {
-            string xml_obj = serializer.Serialize(clientUpdate);
-            communicator.Send(xml_obj, moduleIdentifier);
-            
-        }   
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// publishes deserialized objects to listeners
         /// </summary>
         /// <param name="listener">subscriber</param>
-        public void Subscribe(IServerUpdateListener listener) 
+        public void Subscribe(IServerUpdateListener listener)
         {
-            subscribers.Add(listener);
+            throw new NotImplementedException();
         }
-        
+
 
 
     }

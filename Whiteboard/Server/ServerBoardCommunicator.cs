@@ -43,6 +43,7 @@ namespace Whiteboard
                 }
                 return instance;
             }
+
         }
 
         public void OnDataReceived(string data)
