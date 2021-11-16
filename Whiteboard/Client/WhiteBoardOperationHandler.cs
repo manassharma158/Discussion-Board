@@ -55,7 +55,7 @@ namespace Whiteboard
 
 
         /// <summary>
-        /// Changes the Fill Color of the shape.
+        ///     Changes the Fill Color of the shape.
         /// </summary>
         /// <param name="shapeFill"> Shape Fill Color. </param>
         /// <param name="shapeId">Id of the shape. </param>
@@ -66,7 +66,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Changes the Stroke Color of the shape outline.
+        ///     Changes the Stroke Color of the shape outline.
         /// </summary>
         /// <param name="strokeColor"> Stroke Color. </param>
         /// <param name="shapeId">Id of the shape. </param>
@@ -77,7 +77,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Changes the thickness of the shape outline stroke.
+        ///     Changes the thickness of the shape outline stroke.
         /// </summary>
         /// <param name="strokeWidth"> Stroke Thickness. </param>
         /// <param name="shapeId">Id of the shape. </param>
@@ -88,7 +88,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Creates Ellipse/Circle.
+        ///     Creates Ellipse/Circle.
         /// </summary>
         /// <param name="start"> Coordinate of mouse down event. </param>
         /// <param name="end"> Current cordinate to display real-time shape creation before/at mouse up event. </param>
@@ -97,13 +97,14 @@ namespace Whiteboard
         /// <param name="shapeId"> Id of the shape. Null if shape creation just started. </param>
         /// <param name="shapeComp"> indicative of a mouse up event. </param>
         /// <returns> List of UXShapes for UX to render. </returns>
-        public List<UXShape> CreateEllipse(Coordinate start, Coordinate end, float strokeWidth, BoardColor strokeColor, string shapeId = null, bool shapeComp = false)
+        public List<UXShape> CreateEllipse(Coordinate start, Coordinate end, float strokeWidth, BoardColor strokeColor,
+            string shapeId = null, bool shapeComp = false)
         {
             return _boardState.CreateShape(ShapeType.ELLIPSE, start, end, strokeWidth, strokeColor, shapeId, shapeComp);
         }
 
         /// <summary>
-        /// Creates straight line.
+        ///     Creates straight line.
         /// </summary>
         /// <param name="start"> Coordinate of mouse down event. </param>
         /// <param name="end"> Current cordinate to display real-time shape creation before/at mouse up event. </param>
@@ -112,13 +113,14 @@ namespace Whiteboard
         /// <param name="shapeId"> Id of the shape. Null if shape creation just started. </param>
         /// <param name="shapeComp"> indicative of a mouse up event. </param>
         /// <returns> List of UXShapes for UX to render. </returns>
-        public List<UXShape> CreateLine(Coordinate start, Coordinate end, float strokeWidth, BoardColor strokeColor, string shapeId = null, bool shapeComp = false)
+        public List<UXShape> CreateLine(Coordinate start, Coordinate end, float strokeWidth, BoardColor strokeColor,
+            string shapeId = null, bool shapeComp = false)
         {
             return _boardState.CreateShape(ShapeType.LINE, start, end, strokeWidth, strokeColor, shapeId, shapeComp);
         }
 
         /// <summary>
-        /// Creates Polyline.
+        ///     Creates Polyline.
         /// </summary>
         /// <param name="start"> Coordinate of mouse down event. </param>
         /// <param name="end"> Current cordinate to display real-time shape creation before/at mouse up event. </param>
@@ -127,13 +129,14 @@ namespace Whiteboard
         /// <param name="shapeId"> Id of the shape. Null if shape creation just started. </param>
         /// <param name="shapeComp"> indicative of a mouse up event. </param>
         /// <returns> List of UXShapes for UX to render. </returns>
-        public List<UXShape> CreatePolyline(Coordinate start, Coordinate end, float strokeWidth, BoardColor strokeColor, string shapeId = null, bool shapeComp = false)
+        public List<UXShape> CreatePolyline(Coordinate start, Coordinate end, float strokeWidth, BoardColor strokeColor,
+            string shapeId = null, bool shapeComp = false)
         {
             return _boardState.CreateShape(ShapeType.POLYLINE, start, end, strokeWidth, strokeColor, shapeId, shapeComp);
         }
 
         /// <summary>
-        /// Creates Rectangle/Square.
+        ///     Creates Rectangle/Square.
         /// </summary>
         /// <param name="start"> Coordinate of mouse down event. </param>
         /// <param name="end"> Current cordinate to display real-time shape creation before/at mouse up event. </param>
@@ -142,13 +145,14 @@ namespace Whiteboard
         /// <param name="shapeId"> Id of the shape. Null if shape creation just started. </param>
         /// <param name="shapeComp"> indicative of a mouse up event. </param>
         /// <returns> List of UXShapes for UX to render. </returns>
-        public List<UXShape> CreateRectangle(Coordinate start, Coordinate end, float strokeWidth, BoardColor strokeColor, string shapeId = null, bool shapeComp = false)
+        public List<UXShape> CreateRectangle(Coordinate start, Coordinate end, float strokeWidth,
+            BoardColor strokeColor, string shapeId = null, bool shapeComp = false)
         {
             return _boardState.CreateShape(ShapeType.RECTANGLE, start, end, strokeWidth, strokeColor, shapeId, shapeComp);
         }
 
         /// <summary>
-        /// Delete the shape with given shape ID.
+        ///     Delete the shape with given shape ID.
         /// </summary>
         /// <param name="shapeId">Id of the shape.</param>
         /// <returns></returns>
@@ -158,7 +162,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Gets owner of the shape with a shape Id.
+        ///     Gets owner of the shape with a shape Id.
         /// </summary>
         /// <param name="shapeId"> Id of the shape. </param>
         /// <returns> User Name. </returns>
@@ -168,7 +172,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Performs Redo.
+        ///     Performs Redo.
         /// </summary>
         /// <returns> List of UXShapes for UX to render. </returns>
         public List<UXShape> Redo()
@@ -177,7 +181,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Resizes the shape with given shape ID.
+        ///     Resizes the shape with given shape ID.
         /// </summary>
         /// <param name="start"> Coordinate of mouse down event. </param>
         /// <param name="end"> Current cordinate to display real-time shape creation before/at mouse up event. </param>
@@ -192,7 +196,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Rotates the shape with given shape ID.
+        ///     Rotates the shape with given shape ID.
         /// </summary>
         /// <param name="start"> Coordinate of mouse down event. </param>
         /// <param name="end"> Current cordinate to display real-time shape creation before/at mouse up event. </param>
@@ -205,7 +209,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Switches WhiteBoard state from active to inactive and vice-versa.
+        ///     Switches WhiteBoard state from active to inactive and vice-versa.
         /// </summary>
         /// <returns> Denotes succesfull state switch. </returns>
         public bool SwitchState()
@@ -216,7 +220,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Translates the shape with given shape ID.
+        ///     Translates the shape with given shape ID.
         /// </summary>
         /// <param name="start"> Coordinate of mouse down event. </param>
         /// <param name="end"> Current cordinate to display real-time shape creation before/at mouse up event. </param>
@@ -229,7 +233,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Performs Undo.
+        ///     Performs Undo.
         /// </summary>
         /// <returns> List of UXShapes for UX to render. </returns>
         public List<UXShape> Undo()

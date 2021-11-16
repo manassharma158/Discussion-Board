@@ -5,7 +5,6 @@
  * Date Modified: 11/12/2021
 **/
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -127,7 +126,7 @@ namespace Whiteboard
                 Trace.WriteLine(e.Message);
                 return null;
             }
-           
+
         }
 
         /// <summary>

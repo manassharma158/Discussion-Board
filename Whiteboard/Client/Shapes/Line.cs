@@ -6,7 +6,6 @@
 **/
 
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -20,7 +19,6 @@ namespace Whiteboard
     /// </summary>
     public class Line: MainShape
     {
-
         /// <summary>
         /// Constructor for Ellipse Shape.
         /// </summary>
@@ -38,7 +36,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Constructor to create a Line.
+        ///     Constructor to create a Line.
         /// </summary>
         /// <param name="height">Height of line.</param>
         /// <param name="width">Width of line.</param>
@@ -59,12 +57,12 @@ namespace Whiteboard
                     float angle) :
                     base(ShapeType.LINE, height, width, strokeWidth, strokeColor, shapeFill, start, center, points, angle)
         {
-            this.AddToList(start.Clone());
-            this.AddToList(new Coordinate(start.R + height, start.C + width));
+            AddToList(start.Clone());
+            AddToList(new Coordinate(start.R + height, start.C + width));
         }
 
         /// <summary>
-        /// Default constructor.
+        ///     Default constructor.
         /// </summary>
         public Line() : base(ShapeType.LINE)
         {
@@ -72,7 +70,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Creates/modies prevShape based on start and end coordinate of the mouse. 
+        ///     Creates/modies prevShape based on start and end coordinate of the mouse.
         /// </summary>
         /// <param name="start">The start coordinate of mouse drag.</param>
         /// <param name="end">End coordinate of mouse drag.</param>
@@ -101,7 +99,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        /// Creating clone object of this class.
+        ///     Creating clone object of this class.
         /// </summary>
         /// <returns>Clone of shape.</returns>
         public override MainShape Clone()

@@ -7,9 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Whiteboard
 {
@@ -69,5 +66,10 @@ namespace Whiteboard
             RequestTime = DateTime.Now;
         }
 
+        public List<BoardShape> ShapeUpdates { get; set; }
+        public Operation OperationFlag { get; set; }
+        public string RequesterId { get; set; }
+        public DateTime RequestTime { get; set; }
+        public int CheckpointNumber { get; set; }
     }
 }
