@@ -16,8 +16,8 @@ using System.Threading.Tasks;
 namespace Whiteboard
 {
     /// <summary>
-    ///     Server-side state management for Whiteboard.
-    ///     Non-extendable class having functionalities to maintain state at server side.
+    /// Server-side state management for Whiteboard.
+    /// Non-extendable class having functionalities to maintain state at server side. 
     /// </summary>
     public sealed class ServerBoardStateManager : IServerBoardStateManager
     {
@@ -28,7 +28,7 @@ namespace Whiteboard
         private readonly Dictionary<string, QueueElement> _mapIdToQueueElement;
         private readonly BoardPriorityQueue _priorityQueue;
 
-        // To maintain the Shape-Ids that were recently deleted.
+        // To maintain the Shape-Ids that were recently deleted. 
         // Required in cases of Delete and then Modify situations when updates are not yet reached to all clients
         private readonly HashSet<string> _deletedShapeIds;
 
@@ -36,7 +36,7 @@ namespace Whiteboard
         private int _currentCheckpointState;
 
         /// <summary>
-        ///     Constructor initializing all the attributes.
+        /// Constructor initializing all the attributes. 
         /// </summary>
         public ServerBoardStateManager()
         {
@@ -53,7 +53,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Fetches the checkpoint and updates the server state.
+        /// Fetches the checkpoint and updates the server state. 
         /// </summary>
         /// <param name="checkpointNumber">The identifier/number of the checkpoint which needs to fetched.</param>
         /// <param name="userId">The user who requested the checkpoint.</param>
@@ -88,17 +88,16 @@ namespace Whiteboard
                 Trace.WriteLine("ServerBoardStateManager.FetchCheckpoint: Checkpoint fetched.");
                 return boardServerShape;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Trace.WriteLine("ServerBoardStateManager.FetchCheckpoint: Exception occurred.");
                 Trace.WriteLine(e.Message);
             }
-
             return null;
         }
 
         /// <summary>
-        ///     Fetches the state of the server to send to newly joined user.
+        /// Fetches the state of the server to send to newly joined user. 
         /// </summary>
         /// <param name="userId">The newly joined user who requested the state fetch.</param>
         /// <returns>BoardServerShape containing all shape updates and no. of checkpoints to send to the client.</returns>
@@ -107,24 +106,23 @@ namespace Whiteboard
             try
             {
                 // convert current state into sorted list of shapes (increasing timestamp)
-                var boardShapes = GetOrderedList();
+                List<BoardShape> boardShapes = GetOrderedList();
 
                 // number of checkpoints currently saved at the server
                 int checkpointNumber = GetCheckpointsNumber();
                 BoardServerShape serverShape = new(boardShapes, Operation.FETCH_STATE, userId, checkpointNumber, _currentCheckpointState);
                 return serverShape;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Trace.WriteLine("ServerBoardStateManager.FetchState: Exception occurred.");
                 Trace.WriteLine(e.Message);
             }
-
             return null;
         }
 
         /// <summary>
-        ///     Gets the number of checkpoints saved at server.
+        /// Gets the number of checkpoints saved at server. 
         /// </summary>
         /// <returns>Number specifying the number of checkpoints.</returns>
         public int GetCheckpointsNumber()
@@ -133,7 +131,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Saves the checkpoint at the server.
+        /// Saves the checkpoint at the server. 
         /// </summary>
         /// <param name="userId">Id of the user who requested to save this checkpoint.</param>
         /// <returns>BoardServerShape object specifying the checkpoint number which was created.</returns>
@@ -148,17 +146,16 @@ namespace Whiteboard
                 Trace.WriteLine("ServerBoardStateManager.SaveCheckpoint: Checkpoint saved.");
                 return boardServerShape;
             }
-            catch (Exception e)
-            {
-                Trace.WriteLine("ServerBoardStateManager.SaveCheckpoint: Exception occurred.");
-                Trace.WriteLine(e.Message);
+            catch (Exception e) 
+            { 
+                Trace.WriteLine("ServerBoardStateManager.SaveCheckpoint: Exception occurred."); 
+                Trace.WriteLine(e.Message); 
             }
-
             return null;
         }
 
         /// <summary>
-        ///     Saves the updates on state at the server.
+        /// Saves the updates on state at the server.
         /// </summary>
         /// <param name="boardServerShape">Object containing the update information for shape.</param>
         /// <returns>Boolean to indicate success status of update.</returns>
@@ -195,7 +192,7 @@ namespace Whiteboard
                     _priorityQueue.Insert(queueElement);
                     _mapIdToQueueElement.Add(boardShape.Uid, queueElement);
                     _deletedShapeIds.Remove(boardShape.Uid);
-
+                    
                     return true;
                 }
 
@@ -275,7 +272,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Converts current state to sorted list of BoardShapes, sorted in increasing order of timestamp
+        /// Converts current state to sorted list of BoardShapes, sorted in increasing order of timestamp
         /// </summary>
         /// <returns>Sorted list of BoardShape</returns>
         private List<BoardShape> GetOrderedList()
@@ -290,11 +287,17 @@ namespace Whiteboard
             }
 
             // Adding elements in the list in inceasing order of their timestamp
-            for (var i = queueElements.Count - 1; i >= 0; i--) boardShapes.Add(_mapIdToBoardShape[queueElements[i].Id]);
+            for (int i = queueElements.Count - 1; i >= 0; i--)
+            {
+                boardShapes.Add(_mapIdToBoardShape[queueElements[i].Id]);
+            }
 
             // inserting element back in the priority queue
             // reverse order is better in terms of better average time-complexity
-            for (var i = 0; i < queueElements.Count; i++) _priorityQueue.Insert(queueElements[i]);
+            for (int i = 0; i < queueElements.Count; i++)
+            {
+                _priorityQueue.Insert(queueElements[i]);
+            }
 
             return boardShapes;
         }
@@ -317,7 +320,7 @@ namespace Whiteboard
                 Trace.WriteLine("ServerBoardStateManager.PreConditionChecker: Operation equality condition failed.");
                 throw new InvalidOperationException("Operation type should be same.");
             }
-
+            
             if(operation == Operation.CREATE)
             {
                 // Remove the key,value pair from the map if an entry with that key already exist.
@@ -329,7 +332,7 @@ namespace Whiteboard
             }
             else if(operation == Operation.DELETE || operation == Operation.MODIFY)
             {
-                // The maps should contain this shape's UID.
+                // The maps should contain this shape's UID. 
                 if (!_mapIdToBoardShape.ContainsKey(boardShape.Uid) || !_mapIdToQueueElement.ContainsKey(boardShape.Uid))
                 {
                     Trace.WriteLine("ServerBoardStateManager.PreConditionCheker: Shape to be deleted/modified doesn't exist.");
@@ -354,7 +357,7 @@ namespace Whiteboard
                 _deletedShapeIds.Add(shapeId);
             }
 
-            // clearing current state
+            // clearing current state 
             _mapIdToBoardShape.Clear();
             _mapIdToQueueElement.Clear();
             _priorityQueue.Clear();

@@ -2,11 +2,12 @@ using NUnit.Framework;
 
 namespace Testing
 {
-    public class ContentClientFactoryTests
+    public class Tests
     {
         [SetUp]
         public void Setup()
         {
+
         }
 
         [Test]

@@ -6,6 +6,7 @@
 **/
 
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Constructor to create Rectangle.
+        /// Constructor to create Rectangle.
         /// </summary>
         /// <param name="height">Height.</param>
         /// <param name="width">Width.</param>
@@ -59,14 +60,14 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Default constructor.
+        /// Default constructor.
         /// </summary>
         public Rectangle() : base(ShapeType.RECTANGLE)
         {
         }
 
         /// <summary>
-        ///     Creates/ modifies the previous shape.
+        /// Creates/ modifies the previous shape.
         /// </summary>
         /// <param name="start">Start of mouse drag.</param>
         /// <param name="end">End of mouse drag.</param>
@@ -93,7 +94,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Creating clone object of this class.
+        /// Creating clone object of this class.
         /// </summary>
         /// <returns>Clone of shape.</returns>
         public override MainShape Clone()

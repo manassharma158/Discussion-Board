@@ -5,6 +5,7 @@
  * Date Modified: 11/12/2021
 **/
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Whiteboard
     public class Polyline : MainShape
     {
         /// <summary>
-        ///     Constructor setting just the basic attributes of Polyline.
+        /// Constructor setting just the basic attributes of Polyline.
         /// </summary>
         /// <param name="start">The Coordinate of start of mouse drag while creation.</param>
         public Polyline(Coordinate start) : base(ShapeType.POLYLINE)
@@ -29,7 +30,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Constructor to create Polyline.
+        /// Constructor to create Polyline.
         /// </summary>
         /// <param name="height">Height of Polyline.</param>
         /// <param name="width">Width of Polyline.</param>
@@ -53,7 +54,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Default constructor.
+        /// Default constructor.
         /// </summary>
         public Polyline() : base(ShapeType.POLYLINE)
         {
@@ -61,7 +62,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Creates/ modifies the previous shape.
+        /// Creates/ modifies the previous shape.
         /// </summary>
         /// <param name="start">Start of mouse drag.</param>
         /// <param name="end">End of mouse drag.</param>
@@ -80,7 +81,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Creating clone object of this class.
+        /// Creating clone object of this class.
         /// </summary>
         /// <returns>Clone of shape.</returns>
         public override MainShape Clone()

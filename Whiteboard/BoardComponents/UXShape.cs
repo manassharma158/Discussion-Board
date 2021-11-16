@@ -6,7 +6,12 @@
 **/
 
 using System;
-using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Shapes;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Diagnostics.CodeAnalysis;
 
@@ -46,10 +51,6 @@ namespace Whiteboard
 
         // Operation performed on the state.
         public Operation OperationType;
-        public ShapeType ShapeIdentifier;
-        public Coordinate TranslationCoordinate;
-        public UXOperation UxOperation;
-        public Shape WindowsShape;
 
         /// <summary>
         /// Constructor for UXShape.
@@ -84,6 +85,7 @@ namespace Whiteboard
                     Fill = shapeFillBrush
                 };
                 WindowsShape = EllipseUXElement;
+
             }
             else if (s.ShapeIdentifier == ShapeType.RECTANGLE)
             {
@@ -104,7 +106,7 @@ namespace Whiteboard
                     X2 = s.Start.R + s.Height,
                     Y2 = s.Start.R + s.Width
                 };
-
+                
                 WindowsShape = LineUXElement;
             }
             else
@@ -118,7 +120,6 @@ namespace Whiteboard
                 PolylineUXElement.Points = PolyLinePointCollection;
                 WindowsShape = PolylineUXElement;
             }
-
             WindowsShape.StrokeThickness = s.StrokeWidth;
 
             SolidColorBrush StrokeBrush = new()
@@ -133,7 +134,7 @@ namespace Whiteboard
             {
                 WindowsShape.Uid = shapeId;
             }
-
+            
         }
 
         /// <summary>
@@ -158,5 +159,6 @@ namespace Whiteboard
         public UXShape()
         {
         }
+
     }
 }

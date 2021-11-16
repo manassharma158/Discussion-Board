@@ -77,7 +77,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Changes the shape fill of the shape.
+        /// Changes the shape fill of the shape.
         /// </summary>
         /// <param name="shapeFill">Modified fill color of the shape..</param>
         /// <param name="shapeId">Id of the shape on which operation is performed.</param>
@@ -137,7 +137,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Changes the stroke Width.
+        /// Changes the stroke Width.
         /// </summary>
         /// <param name="strokeWidth">Width of stroke.</param>
         /// <param name="shapeId">Id of the shape on which operation is performed.</param>
@@ -167,8 +167,8 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Provides Update to the Manager, after shape completion.
-        ///     Also yield provides the list of operations for the UX to perform.
+        /// Provides Update to the Manager, after shape completion.
+        /// Also yield provides the list of operations for the UX to perform.
         /// </summary>
         /// <param name="oldBoardShape">Original BoardShape.</param>
         /// <param name="newBoardShape">BoardShape after modification.</param>
@@ -207,7 +207,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Creates shape based on mouse drag.
+        /// Creates shape based on mouse drag.
         /// </summary>
         /// <param name="shapeType">Denotes which shape to create.</param>
         /// <param name="start">Start of mouse drag.</param>
@@ -385,7 +385,7 @@ namespace Whiteboard
                     newBoardShape.LastModifiedTime = DateTime.Now;
                     newBoardShape.CreationTime = DateTime.Now;
                     UpdateStateManager(newBoardShape);
-
+                    
                     //reset the variables
                     _lastDrawn = null;
                 }

@@ -6,6 +6,10 @@
 **/
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Whiteboard
 {
@@ -31,8 +35,8 @@ namespace Whiteboard
         /// <param name="c">Column value.</param>
         public Coordinate(float r, float c)
         {
-            R = r;
-            C = c;
+            this.R = r;
+            this.C = c;
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace Whiteboard
         /// <returns>Clone of object,</returns>
         public Coordinate Clone()
         {
-            return new Coordinate(R, C);
+            return new Coordinate(R,C);
         }
 
         /// <summary>

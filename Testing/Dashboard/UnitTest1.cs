@@ -1,12 +1,13 @@
 using NUnit.Framework;
 
-namespace Testing
+namespace Testing.Dashboard
 {
-    public class ChatClientTests
+    public class Tests
     {
         [SetUp]
         public void Setup()
         {
+
         }
 
         [Test]

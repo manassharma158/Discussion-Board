@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.IO;
+using System.Diagnostics;
 
 namespace Networking
 {
@@ -13,10 +13,12 @@ namespace Networking
         {
             try
             {
-                var serializer = new XmlSerializer(objectToSerialize.GetType());
-                using var stringStream = new StringWriter();
-                serializer.Serialize(stringStream, objectToSerialize);
-                return stringStream.ToString();
+                XmlSerializer serializer = new XmlSerializer(objectToSerialize.GetType());
+                using (var stringStream = new StringWriter())
+                {
+                    serializer.Serialize(stringStream, objectToSerialize);
+                    return stringStream.ToString();
+                }
             }
             catch (Exception ex)
             {
@@ -29,10 +31,13 @@ namespace Networking
         string ISerializer.GetObjectType(string serializedString, string nameSpace)
         {
             var stringReader = new StringReader(serializedString);
-            var xmlReader = XmlReader.Create(stringReader);
-            if (xmlReader.MoveToContent() != XmlNodeType.Element) throw new FormatException();
+            XmlReader xmlReader = XmlReader.Create(stringReader);
+            if (xmlReader.MoveToContent() != XmlNodeType.Element)
+            {
+                throw new FormatException();
+            }
 
-            var typ = nameSpace + "." + xmlReader.Name;
+            string typ = nameSpace + "." + xmlReader.Name;
             return typ;
         }
 
@@ -41,9 +46,9 @@ namespace Networking
         {
             try
             {
-                var serializer = new XmlSerializer(typeof(T));
-                using var stringReader = new StringReader(serializedString);
-                return (T) serializer.Deserialize(stringReader);
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                using (StringReader stringReader = new StringReader(serializedString))
+                    return (T)serializer.Deserialize(stringReader);
             }
             catch (Exception ex)
             {

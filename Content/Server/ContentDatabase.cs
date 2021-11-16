@@ -1,46 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("Testing")]
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Content
 {
     internal class ContentDatabase
     {
-        private Dictionary<int, ChatContext> _chatContexts;
-        private readonly Dictionary<int, MessageData> _messages;
+        private IMongoClient mongoClient;
+        private IMongoDatabase databaseBase;
+        private IMongoCollection<ReceiveMessageData> messages;
 
         public ContentDatabase()
         {
-            _messages = new Dictionary<int, MessageData>();
+            mongoClient = new MongoClient("mongodb://127.0.0.1:27017");
+            databaseBase = mongoClient.GetDatabase("test");
+            messages = databaseBase.GetCollection<ReceiveMessageData>("messages");
         }
 
-        public MessageData Store(MessageData messageData)
+        public ObjectId Store(ReceiveMessageData messageData)
         {
-            messageData.MessageId = IdGenerator.getMessageId();
-            _messages[messageData.MessageId] = messageData;
-            return messageData;
+            messages.InsertOne(messageData);
+            return messageData.MessageId;
         }
 
-        public void Store(ChatContext chatContext)
+        public ReceiveMessageData Retrieve(ObjectId messageId)
         {
-            chatContext.ThreadId = IdGenerator.getChatContextId();
-            _chatContexts[chatContext.ThreadId] = chatContext;
-        }
-
-        public void UpdateMessageData(int id, MessageData messageData)
-        {
-            _messages[id] = messageData;
-        }
-
-        public void UpdateChatContext(int id, ChatContext chatContext)
-        {
-            _chatContexts[id] = chatContext;
-        }
-
-        public MessageData RetrieveMessage(int messageId)
-        {
-            return _messages[messageId];
+            ReceiveMessageData receiveMessageData = messages.Find(message => message.MessageId == messageId).FirstOrDefault();
+            return receiveMessageData;
         }
     }
 }

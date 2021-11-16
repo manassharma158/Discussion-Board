@@ -8,29 +8,31 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Whiteboard
 {
     /// <summary>
-    ///     Stack to store BoardShape before and just after the operation.
+    /// Stack to store BoardShape before and just after the operation.
     /// </summary>
     public class BoardStack
     {
         /// <summary>
-        ///     Capacity of the stack.
+        /// Capacity of the stack.
         /// </summary>
         private static int s_capacity;
 
         /// <summary>
-        ///     The list which will act as stack.
+        /// The list which will act as stack.
         /// </summary>
         private readonly List<Tuple<BoardShape, BoardShape>> _stack;
 
         /// <summary>
-        ///     Initializes BoardStack.
+        /// Removes the first inserted element from the stack.
         /// </summary>
-        /// <param name="capacity">Capacity of stack. Default is 7.</param>
-        public BoardStack(int capacity = 7)
+        private void RemoveFirstInserted()
         {
             if (GetSize() == BoardConstants.EMPTY_SIZE)
             {
@@ -40,9 +42,9 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Removes the first inserted element from the stack.
+        /// Removes the last inserted element from the stack. 
         /// </summary>
-        private void RemoveFirstInserted()
+        private void RemoveLastInserted()
         {
             if (GetSize() == BoardConstants.EMPTY_SIZE)
             {
@@ -52,17 +54,17 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Removes the last inserted element from the stack.
+        /// Initializes BoardStack. 
         /// </summary>
         /// <param name="capacity">Capacity of stack. Default is 7.</param>
         public BoardStack(int capacity = BoardConstants.UNDO_REDO_STACK_SIZE)
         {
-            if (GetSize() == 0) throw new InvalidOperationException("Stack is empty");
-            _stack.RemoveAt(GetSize() - 1);
+            s_capacity = capacity;
+            _stack = new List<Tuple<BoardShape, BoardShape>>();
         }
 
         /// <summary>
-        ///     Gets the size of the stack.
+        /// Gets the size of the stack.
         /// </summary>
         /// <returns>Size of the stack</returns>
         public int GetSize()
@@ -71,7 +73,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Pushes the elements (BoardShape before and after the operation) on the top of the stack.
+        /// Pushes the elements (BoardShape before and after the operation) on the top of the stack.
         /// </summary>
         /// <param name="boardShapePrevious">BoardShape before operation.</param>
         /// <param name="boardShapeNew">BoardShape after operation.</param>
@@ -80,17 +82,15 @@ namespace Whiteboard
             if (GetSize() == s_capacity)
             {
                 Trace.Indent();
-                Trace.WriteLine(
-                    "Whiteboard.BoardStack.Push: Stack is at full capacity. Removing first inserted element.");
+                Trace.WriteLine("Whiteboard.BoardStack.Push: Stack is at full capacity. Removing first inserted element.");
                 Trace.Unindent();
                 RemoveFirstInserted();
             }
-
             _stack.Add(Tuple.Create(boardShapePrevious, boardShapeNew));
         }
 
         /// <summary>
-        ///     Finds the top element of the stack.
+        /// Finds the top element of the stack.
         /// </summary>
         /// <returns>Tuple of BoardShape before and after the operation.</returns>
         public Tuple<BoardShape, BoardShape> Top()
@@ -102,12 +102,11 @@ namespace Whiteboard
                 Trace.Unindent();
                 throw new IndexOutOfRangeException("Stack is empty");
             }
-
             return _stack[GetSize() - 1];
         }
 
         /// <summary>
-        ///     Removes the top element from the stack.
+        /// Removes the top element from the stack. 
         /// </summary>
         public void Pop()
         {
@@ -118,12 +117,11 @@ namespace Whiteboard
                 Trace.Unindent();
                 throw new IndexOutOfRangeException("Stack is empty");
             }
-
             RemoveLastInserted();
         }
 
         /// <summary>
-        ///     Finds if the stack is empty or not.
+        /// Finds if the stack is empty or not.
         /// </summary>
         /// <returns>Boolean indicating if stack is empty.</returns>
         public bool IsEmpty()

@@ -5,7 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Networking\Networking.csproj"/>
+      <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Networking\Networking.csproj" />
     </ItemGroup>
 
 </Project>

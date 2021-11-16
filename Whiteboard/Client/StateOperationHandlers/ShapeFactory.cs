@@ -5,6 +5,12 @@
  * Date Modified: 11/02/2021
 **/
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Whiteboard
 {
     /// <summary>
@@ -32,16 +38,16 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Creates/modifies Shape.
+        /// Creates/modifies Shape.
         /// </summary>
         /// <param name="shapeType">Defines which shape to create.</param>
         /// <param name="start">Start coordinate of mouse drag.</param>
         /// <param name="end">End coordinate of mouse drag.</param>
         /// <param name="prevShape">previous shape to modify.</param>
         /// <returns></returns>
-        public static MainShape MainShapeCreatorFactory(ShapeType shapeType, Coordinate start, Coordinate end,
-            MainShape prevShape)
+        public static MainShape MainShapeCreatorFactory(ShapeType shapeType, Coordinate start, Coordinate end, MainShape prevShape)
         {
+
             if (shapeType == ShapeType.ELLIPSE)
             {
                 return _ellipse.ShapeMaker(start, end, prevShape);
@@ -59,5 +65,6 @@ namespace Whiteboard
                 return _rectangle.ShapeMaker(start, end, prevShape);
             }
         }
+
     }
 }

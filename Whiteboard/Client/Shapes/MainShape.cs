@@ -5,6 +5,7 @@
  * Date Modified: 11/12/2021
 **/
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,9 @@ namespace Whiteboard
     /// </summary>
     abstract public class MainShape
     {
-        protected List<Coordinate> Points;
 
         /// <summary>
-        ///     Constructor to initialise MainShape with a shape.
+        /// Constructor to initialise MainShape with a shape.
         /// </summary>
         /// <param name="s">The type of shape.</param>
         public MainShape(ShapeType s)
@@ -134,33 +134,33 @@ namespace Whiteboard
                 Points = new();
             }
             Points.Add(c);
-        }
+        } 
 
         /// <summary>
-        ///     Pops and returns the last element of the list of coordinates.
+        /// Pops and returns the last element of the list of coordinates.
         /// </summary>
         /// <returns>The last element in the list of Coordinates.</returns>
         public Coordinate PopLastElementFromList()
         {
-            var lastCord = GetLast();
-            var lastIndex = Points.Count() - 1;
+            Coordinate lastCord = GetLast();
+            int lastIndex = Points.Count()-1;
             Points.RemoveAt(lastIndex);
             return lastCord;
         }
 
         /// <summary>
-        ///     Gets the last element of the list of Coordinates.
+        /// Gets the last element of the list of Coordinates.
         /// </summary>
         /// <returns>The last element of the list of Coordinates.</returns>
         public Coordinate GetLast()
         {
-            var lastIndex = Points.Count() - 1;
-            var c = Points.ElementAt(lastIndex);
+            int lastIndex = Points.Count() - 1;
+            Coordinate c = Points.ElementAt(lastIndex);
             return c.Clone();
         }
 
         /// <summary>
-        ///     Returns the Deep Copy of the list of Points.
+        /// Returns the Deep Copy of the list of Points.
         /// </summary>
         /// <returns></returns>
         public List<Coordinate> GetPoints()
@@ -169,13 +169,13 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Deep Copy for the Shape.
+        /// Deep Copy for the Shape.
         /// </summary>
         /// <returns>Deep Copy for the Shape.</returns>
-        public abstract MainShape Clone();
+        abstract public MainShape Clone();
 
         /// <summary>
-        ///     Creates/modies prevShape based on start and end coordinate of the mouse.
+        /// Creates/modies prevShape based on start and end coordinate of the mouse. 
         /// </summary>
         /// <param name="start">The start coordinate of mouse drag.</param>
         /// <param name="end">End coordinate of mouse drag.</param>
@@ -215,7 +215,7 @@ namespace Whiteboard
             Vector centerVector = new(Math.Cos(AngleOfRotation), Math.Sin(AngleOfRotation));
 
             // Finding displacement vector.
-            Coordinate deltaCord = end - start;
+            Coordinate deltaCord = end - start;            
             Vector deltaVector = new(deltaCord.C, deltaCord.R);
 
             double angleBetween = Math.Abs(Vector.AngleBetween(centerVector, deltaVector));
@@ -257,7 +257,7 @@ namespace Whiteboard
                     break;
                 default:
                     return false;
-            }
+            } 
             return true;
         }
     }

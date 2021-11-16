@@ -10,16 +10,16 @@ namespace Networking
     {
         private readonly ConcurrentDictionary<string, ConcurrentQueue<Packet>> _multiLevelQueue;
         private readonly ConcurrentDictionary<string, int> _priorityMap;
-        private int _avoidStateChange;
-        private string _currentModuleIdentifier;
+        private List<string> _moduleIdentifiers;
         private int _currentQueue;
         private int _currentWeight;
-        private List<string> _moduleIdentifiers;
+        private int _avoidStateChange;
+        private string _currentModuleIdentifier;
         private int _queueSize;
-        private readonly object lockObj = new();
+        private object lockObj = new object();
 
         /// <summary>
-        ///     Queue constructor initializes multilevel queue, priority map dictionaries and also the state of the queue.
+        /// Queue constructor initializes multilevel queue, priority map dictionaries and also the state of the queue.
         /// </summary>
         public Queue()
         {
@@ -33,17 +33,22 @@ namespace Networking
         }
 
         /// <summary>
-        ///     Register Module into the multilevel queue.
+        /// Register Module into the multilevel queue.
         /// </summary>
         /// <param name="moduleId">Unique Id for module.</param>
         /// <param name="priority">Priority Number indicating the weight to be given to the module.</param>
         public void RegisterModule(string moduleId, int priority)
         {
-            if (priority <= 0) throw new Exception("Priority should be positive integer");
+            if (priority <= 0)
+            {
+                throw new Exception("Priority should be positive integer");
+            }
 
             // Adding <moduleId, Queue> keyValuePair to the _multiLevelQueue dictionary 
             if (!_multiLevelQueue.TryAdd(moduleId, new ConcurrentQueue<Packet>()))
+            {
                 throw new Exception("Adding Queue to MultiLevelQueue Failed!");
+            }
 
             // Adding <moduleId, priority> keyValuePair to the _priorityMap dictionary
             if (!_priorityMap.TryAdd(moduleId, priority))
@@ -53,7 +58,7 @@ namespace Networking
             }
 
             // Getting the moduleIds in the priority order
-            var orderedIdPairs = _priorityMap.OrderByDescending(s => s.Value);
+            IOrderedEnumerable<KeyValuePair<string, int>> orderedIdPairs = _priorityMap.OrderByDescending(s => s.Value);
             _moduleIdentifiers = new List<string>();
             foreach (var keyValuePair in orderedIdPairs)
                 _moduleIdentifiers.Add(keyValuePair.Key);
@@ -61,7 +66,7 @@ namespace Networking
             if (_avoidStateChange == 0)
             {
                 // Assigning the _currentWeight to the top priority queue's weight
-                var moduleIdentifier = _moduleIdentifiers[_currentQueue];
+                string moduleIdentifier = _moduleIdentifiers[_currentQueue];
                 _currentWeight = _priorityMap[moduleIdentifier];
                 _currentModuleIdentifier = moduleIdentifier;
             }
@@ -74,7 +79,7 @@ namespace Networking
         }
 
         /// <summary>
-        ///     Size of the queue.
+        /// Size of the queue.
         /// </summary>
         /// <returns>The number of packets the queue holds.</returns>
         public int Size()
@@ -83,7 +88,7 @@ namespace Networking
         }
 
         /// <summary>
-        ///     Dequeues all the elements.
+        /// Dequeues all the elements.
         /// </summary>
         public void Clear()
         {
@@ -92,16 +97,18 @@ namespace Networking
             {
                 _queueSize = 0;
             }
-
-            foreach (var keyValuePair in _multiLevelQueue) keyValuePair.Value.Clear();
+            foreach (var keyValuePair in _multiLevelQueue)
+            {
+                keyValuePair.Value.Clear();
+            }
         }
 
         /// <summary>
-        ///     Enqueues an object of IPacket.
+        /// Enqueues an object of IPacket.
         /// </summary>
         public void Enqueue(Packet item)
         {
-            var moduleIdentifier = item.ModuleIdentifier;
+            string moduleIdentifier = item.ModuleIdentifier;
 
             // Check if the _multiLevelQueue dictionary contains the moduleIdentifier
             if (_multiLevelQueue.ContainsKey(moduleIdentifier))
@@ -110,7 +117,6 @@ namespace Networking
                 {
                     _queueSize += 1;
                 }
-
                 _multiLevelQueue[moduleIdentifier].Enqueue(item);
             }
             else
@@ -122,7 +128,7 @@ namespace Networking
         }
 
         /// <summary>
-        ///     Dequeues an item from the queue and returns the item.
+        /// Dequeues an item from the queue and returns the item.
         /// </summary>
         /// <returns>Returns the dequeued packet from the queue.</returns>
         public Packet Dequeue()
@@ -131,7 +137,7 @@ namespace Networking
             {
                 FindNext(); // Populates the fields of _currentQueue, _currentWeight corresponding to the next packet
 
-                var moduleIdentifier = _moduleIdentifiers[_currentQueue];
+                string moduleIdentifier = _moduleIdentifiers[_currentQueue];
                 _multiLevelQueue[moduleIdentifier].TryDequeue(out var packet);
                 _currentWeight -= 1;
                 _avoidStateChange = 1;
@@ -140,7 +146,6 @@ namespace Networking
                 {
                     _queueSize -= 1;
                 }
-
                 return packet;
             }
 
@@ -148,7 +153,7 @@ namespace Networking
         }
 
         /// <summary>
-        ///     Peeks into the first element of the queue.
+        /// Peeks into the first element of the queue.
         /// </summary>
         /// <returns>Returns the peeked packet from the queue.</returns>
         public Packet Peek()
@@ -157,7 +162,7 @@ namespace Networking
             {
                 FindNext(); // Populates the fields of _currentQueue, _currentWeight corresponding to the next packet
 
-                var moduleIdentifier = _moduleIdentifiers[_currentQueue];
+                string moduleIdentifier = _moduleIdentifiers[_currentQueue];
                 _multiLevelQueue[moduleIdentifier].TryPeek(out var packet);
 
                 Trace.WriteLine("Peeking into the queue");
@@ -168,7 +173,7 @@ namespace Networking
         }
 
         /// <summary>
-        ///     Checks if the queue is empty or not.
+        /// Checks if the queue is empty or not.
         /// </summary>
         /// <returns>True if queue is empty and false otherwise.</returns>
         public bool IsEmpty()
@@ -177,11 +182,11 @@ namespace Networking
         }
 
         /// <summary>
-        ///     Sets the _currentQueue, _currentWeight variables corresponding to the next packet to be dequeued/peeked.
+        /// Sets the _currentQueue, _currentWeight variables corresponding to the next packet to be dequeued/peeked.
         /// </summary>
         private void FindNext()
         {
-            var moduleIdentifier = _moduleIdentifiers[_currentQueue];
+            string moduleIdentifier = _moduleIdentifiers[_currentQueue];
 
             if (_currentWeight == 0)
             {
@@ -196,6 +201,7 @@ namespace Networking
             {
                 // If the current queue has no packets, otherwise do nothing
                 if (_multiLevelQueue[moduleIdentifier].Count == 0)
+                {
                     // Finding the next queue with packets
                     while (_multiLevelQueue[moduleIdentifier].Count == 0)
                     {
@@ -204,6 +210,7 @@ namespace Networking
                         _currentWeight = _priorityMap[moduleIdentifier];
                         _currentModuleIdentifier = moduleIdentifier;
                     }
+                }
             }
         }
     }

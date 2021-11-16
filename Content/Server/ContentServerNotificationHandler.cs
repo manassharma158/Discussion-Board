@@ -1,21 +1,14 @@
-﻿using System;
-using Networking;
+﻿using Networking;
+using System;
 
 namespace Content
 {
     public class ContentServerNotificationHandler : INotificationHandler
     {
-        private readonly ContentServer _contentServer;
-
-        public ContentServerNotificationHandler()
-        {
-            _contentServer = ContentServerFactory.GetInstance() as ContentServer;
-        }
-
         /// <inheritdoc />
         public void OnDataReceived(string data)
         {
-            _contentServer.Receive(data);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />

@@ -6,6 +6,7 @@
 **/
 
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Constructor to create an ellipse.
+        /// Constructor to create an ellipse.
         /// </summary>
         /// <param name="height">Height.</param>
         /// <param name="width">Width.</param>
@@ -45,11 +46,11 @@ namespace Whiteboard
         /// <param name="start">The Coordinate of start of mouse drag while creation.</param>
         /// <param name="points">List of points, if any.</param>
         /// <param name="angle">Angle of Rotation.</param>
-        public Ellipse(float height,
-                       float width,
-                       float strokeWidth,
-                       BoardColor strokeColor,
-                       BoardColor shapeFill,
+        public Ellipse(float height, 
+                       float width, 
+                       float strokeWidth, 
+                       BoardColor strokeColor, 
+                       BoardColor shapeFill, 
                        Coordinate start,
                        Coordinate center,
                        List<Coordinate> points,
@@ -59,14 +60,14 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Default constructor.
+        /// Default constructor.
         /// </summary>
         public Ellipse() : base(ShapeType.ELLIPSE)
         {
         }
 
         /// <summary>
-        ///     Creates/ modifies the previous shape.
+        /// Creates/ modifies the previous shape.
         /// </summary>
         /// <param name="start">Start of mouse drag.</param>
         /// <param name="end">End of mouse drag.</param>
@@ -93,12 +94,13 @@ namespace Whiteboard
         }
 
         /// <summary>
-        ///     Creating clone object of this class.
+        /// Creating clone object of this class.
         /// </summary>
         /// <returns>Clone of Ellipse.</returns>
         public override MainShape Clone()
         {
             return new Ellipse(Height, Width, StrokeWidth, StrokeColor.Clone(), ShapeFill.Clone(), Start.Clone(), Center.Clone(), null, AngleOfRotation);
         }
+
     }
 }
