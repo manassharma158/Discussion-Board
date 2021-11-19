@@ -232,7 +232,7 @@ namespace Testing.Whiteboard.DataStructures
         }
 
 
-        private QueueElement GetRandomQueueElement(int randomVal, string id, string specifier)
+        private static QueueElement GetRandomQueueElement(int randomVal, string id, string specifier)
         {
             if(specifier == "second")
             {
