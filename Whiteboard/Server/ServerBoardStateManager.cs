@@ -35,6 +35,9 @@ namespace Whiteboard
         // The current base state.
         private int _currentCheckpointState;
 
+        // To know if unit test is running
+        public static readonly bool IsRunningFromNUnit = AppDomain.CurrentDomain.GetAssemblies().Any(a => a.FullName.ToLowerInvariant().StartsWith("nunit.framework"));
+
         /// <summary>
         /// Constructor initializing all the attributes. 
         /// </summary>
